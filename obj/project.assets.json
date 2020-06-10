@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagochi\\Tamagochi.csproj",
+      "projectUniqueName": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagotchi\\Tamagochi.csproj",
       "projectName": "Tamagochi",
-      "projectPath": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagochi\\Tamagochi.csproj",
+      "projectPath": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagotchi\\Tamagochi.csproj",
       "packagesPath": "C:\\Users\\Kelsey\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagochi\\obj\\",
+      "outputPath": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagotchi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Kelsey\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -34,38 +34,10 @@
         "netcoreapp3.1": {
           "projectReferences": {}
         }
-      },
-      "warningProperties": {
-        "warnAsError": [
-          "NU1605"
-        ]
       }
     },
     "frameworks": {
-      "netcoreapp3.1": {
-        "imports": [
-          "net461",
-          "net462",
-          "net47",
-          "net471",
-          "net472",
-          "net48"
-        ],
-        "assetTargetFallback": true,
-        "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[3.1.2, 3.1.2]"
-          }
-        ],
-        "frameworkReferences": {
-          "Microsoft.NETCore.App": {
-            "privateAssets": "all"
-          }
-        },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
-      }
+      "netcoreapp3.1": {}
     }
   }
 }

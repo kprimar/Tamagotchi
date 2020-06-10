@@ -11,3 +11,16 @@ D:\Projects\Mentorship\Tamagochi\Tamagochi\bin\Debug\netcoreapp3.1\Tamagochi.pdb
 D:\Projects\Mentorship\Tamagochi\Tamagochi\obj\Debug\netcoreapp3.1\Tamagochi.dll
 D:\Projects\Mentorship\Tamagochi\Tamagochi\obj\Debug\netcoreapp3.1\Tamagochi.pdb
 D:\Projects\Mentorship\Tamagochi\Tamagochi\obj\Debug\netcoreapp3.1\Tamagochi.genruntimeconfig.cache
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\bin\Debug\netcoreapp3.1\Tamagochi.exe
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\bin\Debug\netcoreapp3.1\Tamagochi.deps.json
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\bin\Debug\netcoreapp3.1\Tamagochi.runtimeconfig.json
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\bin\Debug\netcoreapp3.1\Tamagochi.runtimeconfig.dev.json
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\bin\Debug\netcoreapp3.1\Tamagochi.dll
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\bin\Debug\netcoreapp3.1\Tamagochi.pdb
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\obj\Debug\netcoreapp3.1\Tamagochi.csprojAssemblyReference.cache
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\obj\Debug\netcoreapp3.1\Tamagochi.AssemblyInfoInputs.cache
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\obj\Debug\netcoreapp3.1\Tamagochi.AssemblyInfo.cs
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\obj\Debug\netcoreapp3.1\Tamagochi.csproj.CoreCompileInputs.cache
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\obj\Debug\netcoreapp3.1\Tamagochi.dll
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\obj\Debug\netcoreapp3.1\Tamagochi.pdb
+D:\Projects\Mentorship\Tamagochi\Tamagotchi\obj\Debug\netcoreapp3.1\Tamagochi.genruntimeconfig.cache

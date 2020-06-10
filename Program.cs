@@ -11,27 +11,121 @@ namespace Tamagochi
             Console.WriteLine("Welcome to the Pokemon Center. Choose your starter\n");
             ChooseStarter(myPokemon);
 
-            Console.WriteLine("Congratulations! You chose a " + myPokemon.breed! + "\nWhat would you like to name it?");
+            Console.WriteLine("Congratulations! You chose a " + myPokemon.breed! + "\nWhat would you like to name it?\n");
             NamePokemon(myPokemon);
             Console.WriteLine(myPokemon.name + " is a great name for a " + myPokemon.breed);
 
             int currentTurn = 0;
-            StartNextTurn(currentTurn, myPokemon);
-            Console.WriteLine("What do you want to do with your pet?");
-            ChooseAction();
-            //Update stats
-            //Start next turn
+            while(currentTurn < 10)
+            {
+                StartNextTurn(currentTurn, myPokemon);
+            }
+            Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " had a great day! YOU WIN!");
 
+
+
+
+        }
+
+
+        private static void EndCurrentTurn(Pokemon myPokemon)
+        {
+            int currentHunger = myPokemon.hunger;
+            int currentThirst = myPokemon.thirst;
+            int currentHappiness = myPokemon.happiness;
+
+            if (currentHunger < currentThirst && currentHunger < currentHappiness)
+            {
+                Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " looks hungry.\n");
+            }
+            else if (currentThirst < currentHunger && currentThirst < currentHappiness)
+            {
+                Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " looks thirsty.\n");
+            }
+            else 
+            {
+                Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " looks bored.\n");
+                return;
+            }
+
+
+        }
+
+        public static void ShowDebugsStats(Pokemon myPokemon)
+        {
             Console.WriteLine("DEBUG: current hunger is: " + myPokemon.hunger);
             Console.WriteLine("DEBUG: current thirst is: " + myPokemon.thirst);
             Console.WriteLine("DEBUG: current happiness is: " + myPokemon.happiness);
-
-            Console.ReadLine();
         }
 
-        public static void ChooseAction()
+        public static void ChooseAction(Pokemon myPokemon)
         {
-            Console.WriteLine("Press [F] - Give Food\nPress [W] - Give Water\nPress [P] - Play");
+            Console.WriteLine("Press [F] - Give Food\nPress [W] - Give Water\nPress [P] - Play\n");
+            var actionSelect = Console.ReadLine();
+
+            switch (actionSelect)
+            {
+                case "F":
+                case "f":
+                    Console.WriteLine("You fed " + myPokemon.name + " the " + myPokemon.breed + ". They look satisfied.\n");
+                    myPokemon.hunger += 5;
+                    if (myPokemon.hunger > 10)
+                    {
+                        myPokemon.hunger = 10;
+                    }
+                    break;
+                case "W":
+                case "w":
+                    myPokemon.thirst += 5;
+                    Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " took a drink. They look refreshed.\n");
+                    if (myPokemon.thirst > 10)
+                    {
+                        myPokemon.thirst = 10;
+                    }
+                    break;
+                case "P":
+                case "p":
+                    myPokemon.happiness += 5;
+                    if (myPokemon.happiness > 10)
+                    {
+                        Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " looks excited!\n");
+                        myPokemon.happiness = 10;
+                    }
+                    break;
+                default:
+                    Console.WriteLine("That isn't a valid selection\n");
+                    ChooseAction(myPokemon);
+                    break;
+            }
+
+            EndCurrentTurn(myPokemon);
+            ShowDebugsStats(myPokemon); //DEBUG LINES
+        }
+
+
+        public static void StartNextTurn(int currentTurn, Pokemon myPokemon)
+        {
+            currentTurn++;
+            Console.WriteLine(currentTurn);
+            myPokemon.ReduceStats();
+            if (myPokemon.hunger <=0 || myPokemon.thirst <= 0 || myPokemon.happiness <= 0)
+            {
+                myPokemon.isAlive = false;
+                GameOver(myPokemon);
+            }
+                Console.WriteLine("What do you want to do with " + myPokemon.name + " the " + myPokemon.breed + "?\n");
+            ChooseAction(myPokemon);
+        }
+
+        private static void GameOver(Pokemon myPokemon)
+        {
+            Console.WriteLine("Oh no! You exhausted " + myPokemon.name + " the " + myPokemon.breed + ". GAME OVER");
+        }
+
+        public static void NamePokemon(Pokemon myPokemon)
+        {
+           string nameInput = Console.ReadLine();
+           myPokemon.name = nameInput;
         }
 
         public static void ChooseStarter(Pokemon myPokemon)
@@ -65,21 +159,8 @@ namespace Tamagochi
                     break;
             }
         }
-
-        public static void NamePokemon(Pokemon myPokemon)
-        {
-           string nameInput = Console.ReadLine();
-           myPokemon.name = nameInput;
-        }
-
-        public static void StartNextTurn(int currentTurn, Pokemon myPokemon)
-        {
-            currentTurn++;
-            myPokemon.ReduceStats();
-        }
-
-
     }
+
 
     public class Pokemon
     {

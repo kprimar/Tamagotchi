@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\Mentorship\\Tamagochi\\Tamagochi\\Tamagochi.csproj": {}
+    "D:\\Projects\\Mentorship\\Tamagochi\\Tamagotchi\\Tamagochi.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\Mentorship\\Tamagochi\\Tamagochi\\Tamagochi.csproj": {
+    "D:\\Projects\\Mentorship\\Tamagochi\\Tamagotchi\\Tamagochi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagochi\\Tamagochi.csproj",
+        "projectUniqueName": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagotchi\\Tamagochi.csproj",
         "projectName": "Tamagochi",
-        "projectPath": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagochi\\Tamagochi.csproj",
+        "projectPath": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagotchi\\Tamagochi.csproj",
         "packagesPath": "C:\\Users\\Kelsey\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagochi\\obj\\",
+        "outputPath": "D:\\Projects\\Mentorship\\Tamagochi\\Tamagotchi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kelsey\\AppData\\Roaming\\NuGet\\NuGet.Config",
