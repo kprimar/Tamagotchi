@@ -7,21 +7,15 @@ namespace Tamagochi
 {    public class Pokemon
     {
         protected string pType;
-        public string name;
-        public bool isAlive = true;
+        protected string name;
+        protected bool isAlive = true;
+        protected bool hasThirst;
+        protected int hunger = 10;
+        protected int thirst = 10;
+        protected int happiness = 10;
 
-        public int hunger = 10;
-        public int thirst = 10;
-        public int happiness = 10;
 
-
-
-        public string GetType()
-        {
-            return pType;
-        }
-
-        //REDUCE STATS
+        //MODIFY STATS
         public int StatDecreaseThisTurn()
         {
             Random random = new Random();
@@ -32,22 +26,47 @@ namespace Tamagochi
             int hungerChange = StatDecreaseThisTurn();
             hunger -= hungerChange;
 
-            int thirstChange = StatDecreaseThisTurn();
-            thirst -= thirstChange;
+            if(hasThirst)
+            {
+                int thirstChange = StatDecreaseThisTurn();
+                thirst -= thirstChange;
+            }
 
             int happinessChange = StatDecreaseThisTurn();
             happiness -= happinessChange;
-
         }
-
+        public void HungerUp()
+        {
+            hunger += 5;
+            if (hunger > 10)
+            {
+                hunger = 10;
+            }
+        }
+        public void ThirstUp()
+        {
+            thirst += 5;
+            if (thirst > 10)
+            {
+                thirst = 10;
+            }
+        }
+        public void HappinessUp()
+        {
+            happiness += 5;
+            if (happiness > 10)
+            {
+                happiness = 10;
+            }
+        }
         public string GiveHint()
         {
-            if (hunger < thirst && hunger < happiness)
+            if (hunger <= thirst && hunger <= happiness)
             {
                 string hungerHint = name + " the " + pType + " looks hungry.\n";
                 return hungerHint;
             }
-            else if (thirst < hunger && thirst < happiness)
+            else if (thirst <= hunger && thirst <= happiness)
             {
                 string thirstHint = name + " the " + pType + " looks thirsty.\n";
                 return thirstHint;
@@ -60,19 +79,50 @@ namespace Tamagochi
 
         }
 
+        public void SetName(string nameInput)
+        {
+            name = nameInput;
+        }
 
-        //INCREASE STATS
-        public void HealthUp()
+        public string GetName()
         {
-            hunger += 5;
+            return name;
         }
-        public void ThirstUp()
+
+
+        //GET PROTECTED DATA
+        public string GetType()
         {
-            thirst += 5;
+            return pType;
         }
-        public void HappinessUp()
+
+        public int GetHunger()
         {
-            happiness += 5;
+            return hunger;
+        }
+
+        public bool GetsThirsty()
+        {
+            return hasThirst;
+        }
+
+        public int GetThirst()
+        {
+            return thirst;
+        }
+
+        public int GetHappiness()
+        {
+            return happiness;
+        }
+
+        public bool CheckHealth()
+        {
+            if (hunger <= 0 || thirst <= 0 || happiness <= 0)
+            {
+                isAlive = false;
+            }
+            return isAlive;
         }
 
     }
@@ -82,7 +132,8 @@ namespace Tamagochi
         public Pikachu()
         {
             pType = "Pikachu";
-        }
+            hasThirst = true;
+    }
 
     }
     public class Charmander : Pokemon
@@ -90,6 +141,7 @@ namespace Tamagochi
         public Charmander()
         {
             pType = "Charmander";
+            hasThirst = true;
         }
     }
 
@@ -98,6 +150,7 @@ namespace Tamagochi
         public Squirtle()
         {
             pType = "Squirtle";
+            hasThirst = false;
         }
     }
 }
