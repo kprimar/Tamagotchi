@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace Tamagochi
 {
@@ -7,28 +7,38 @@ namespace Tamagochi
     {
         public static void Main(string[] args)
         {
-            Pokemon myPokemon = new Pokemon();
-            Console.WriteLine("Welcome to the Pokemon Center. Choose your starter\n");
-            ChooseStarter(myPokemon);
-
-            Console.WriteLine("Congratulations! You chose a " + myPokemon.breed! + "\nWhat would you like to name it?\n");
-            NamePokemon(myPokemon);
-            Console.WriteLine(myPokemon.name + " is a great name for a " + myPokemon.breed);
-
-            int currentTurn = 0;
-            while(currentTurn < 10)
-            {
-                StartNextTurn(currentTurn, myPokemon);
-            }
-            Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " had a great day! YOU WIN!");
-
-
-
-
+            StartGame();
         }
 
+        public static void StartGame()
+        {
+            Pokemon myPokemon = null;
 
-        private static void EndCurrentTurn(Pokemon myPokemon)
+            while (myPokemon == null)
+            {
+                Console.WriteLine("Welcome to the Pokemon Center. Choose your starter\n");
+                myPokemon = ChooseStarter();
+            }
+
+            while (myPokemon.name == null)
+            {
+                Console.WriteLine("Congratulations! You chose a " + myPokemon.GetType() + "\nWhat would you like to name it?\n");
+                myPokemon.name = Console.ReadLine();
+            }
+
+            Console.WriteLine(myPokemon.name + " is a great name for a " + myPokemon.GetType());
+
+
+            for (int currentTurn = 1; currentTurn < 10; currentTurn++)
+            {
+                PlayerTurn(myPokemon);
+                Console.WriteLine(myPokemon.GiveHint());
+            }
+
+            Console.WriteLine(myPokemon.name + " the " + myPokemon.GetType() + " had a great day! YOU WIN!");
+        }
+
+        private static void GiveHint(Pokemon myPokemon)
         {
             int currentHunger = myPokemon.hunger;
             int currentThirst = myPokemon.thirst;
@@ -36,15 +46,15 @@ namespace Tamagochi
 
             if (currentHunger < currentThirst && currentHunger < currentHappiness)
             {
-                Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " looks hungry.\n");
+                Console.WriteLine(myPokemon.name + " the " + myPokemon.GetType() + " looks hungry.\n");
             }
             else if (currentThirst < currentHunger && currentThirst < currentHappiness)
             {
-                Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " looks thirsty.\n");
+                Console.WriteLine(myPokemon.name + " the " + myPokemon.GetType() + " looks thirsty.\n");
             }
             else 
             {
-                Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " looks bored.\n");
+                Console.WriteLine(myPokemon.name + " the " + myPokemon.GetType() + " looks bored.\n");
                 return;
             }
 
@@ -67,7 +77,7 @@ namespace Tamagochi
             {
                 case "F":
                 case "f":
-                    Console.WriteLine("You fed " + myPokemon.name + " the " + myPokemon.breed + ". They look satisfied.\n");
+                    Console.WriteLine("You fed " + myPokemon.name + " the " + myPokemon.GetType() + ". They look satisfied.\n");
                     myPokemon.hunger += 5;
                     if (myPokemon.hunger > 10)
                     {
@@ -77,7 +87,7 @@ namespace Tamagochi
                 case "W":
                 case "w":
                     myPokemon.thirst += 5;
-                    Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " took a drink. They look refreshed.\n");
+                    Console.WriteLine(myPokemon.name + " the " + myPokemon.GetType() + " took a drink. They look refreshed.\n");
                     if (myPokemon.thirst > 10)
                     {
                         myPokemon.thirst = 10;
@@ -88,7 +98,7 @@ namespace Tamagochi
                     myPokemon.happiness += 5;
                     if (myPokemon.happiness > 10)
                     {
-                        Console.WriteLine(myPokemon.name + " the " + myPokemon.breed + " looks excited!\n");
+                        Console.WriteLine(myPokemon.name + " the " + myPokemon.GetType() + " looks excited!\n");
                         myPokemon.happiness = 10;
                     }
                     break;
@@ -98,28 +108,30 @@ namespace Tamagochi
                     break;
             }
 
-            EndCurrentTurn(myPokemon);
+
             ShowDebugsStats(myPokemon); //DEBUG LINES
         }
 
 
-        public static void StartNextTurn(int currentTurn, Pokemon myPokemon)
+        public static void PlayerTurn(Pokemon myPokemon)
         {
-            currentTurn++;
-            Console.WriteLine(currentTurn);
+
             myPokemon.ReduceStats();
             if (myPokemon.hunger <=0 || myPokemon.thirst <= 0 || myPokemon.happiness <= 0)
             {
                 myPokemon.isAlive = false;
                 GameOver(myPokemon);
             }
-                Console.WriteLine("What do you want to do with " + myPokemon.name + " the " + myPokemon.breed + "?\n");
+                Console.WriteLine("What do you want to do with " + myPokemon.name + " the " + myPokemon.GetType() + "?\n");
             ChooseAction(myPokemon);
         }
 
         private static void GameOver(Pokemon myPokemon)
         {
-            Console.WriteLine("Oh no! You exhausted " + myPokemon.name + " the " + myPokemon.breed + ". GAME OVER");
+            Console.WriteLine("Oh no! You exhausted " + myPokemon.name + " the " + myPokemon.GetType() + ". GAME OVER");
+            Console.WriteLine("Press any key to play again");
+            Console.ReadLine();
+            StartGame();
         }
 
         public static void NamePokemon(Pokemon myPokemon)
@@ -128,7 +140,7 @@ namespace Tamagochi
            myPokemon.name = nameInput;
         }
 
-        public static void ChooseStarter(Pokemon myPokemon)
+        public static Pokemon ChooseStarter()
         {
             Console.WriteLine("Press 'P' for Pikachu\nPress 'C' for Charmander\nPress 'S' for Squirtle\n");
             var starterInput = Console.ReadLine();
@@ -143,80 +155,21 @@ namespace Tamagochi
             {
                 case "P":
                 case "p":
-                    myPokemon.breed = "Pikachu";
-                    break;
+                    return new Pikachu();
                 case "C":
                 case "c":
-                    myPokemon.breed = "Charmander";
-                    break;
+                    return new Charmander();
                 case "S":
                 case "s":
-                    myPokemon.breed = "Squirtle";
-                    break;
+                    return new Squirtle();
+
                 default:
                     Console.WriteLine("That isn't a valid answer");
-                    ChooseStarter(myPokemon);
-                    break;
+                    return null;
             }
         }
     }
 
 
-    public class Pokemon
-    {
-        public string name;
-        public string breed;
-        public bool isAlive = true;
 
-        public int hunger = 10;
-        public int thirst = 10;
-        public int happiness = 10;
-
-        public int StatDecreaseThisTurn()
-        {
-            Random random = new Random();
-            return random.Next(0, 5);
-        }
-
-        public void ReduceStats()
-        {
-            int hungerChange = StatDecreaseThisTurn();
-            hunger -= hungerChange;
-
-            int thirstChange = StatDecreaseThisTurn();
-            thirst -= thirstChange;
-            
-            int happinessChange = StatDecreaseThisTurn();
-            happiness -= happinessChange;
-
-        }
-
-        public void HealthUp()
-        {
-            hunger += 5;
-        }
-        public void ThirstUp()
-        {
-            thirst += 5;
-        }
-        public void HappinessUp()
-        {
-            happiness += 5;
-        }
-
-    }
-
-    public class Pikachu : Pokemon
-    {
-
-    }
-    public class Charmander : Pokemon
-    {
-
-    }
-
-    public class Squirtle : Pokemon
-    {
-
-    }
 }
