@@ -7,9 +7,19 @@ namespace Tamagochi
     {
         public static void Main(string[] args)
         {
-            StartGame();
+            GameMode selectedMode = new Tomagochi();
+            Tomagochi.StartGame();
         }
 
+    }
+
+    abstract class GameMode
+    {
+
+    }
+
+    class Tomagochi : GameMode
+    { 
         public static void StartGame()
         {
             Pokemon myPokemon = null;
@@ -30,15 +40,30 @@ namespace Tamagochi
             }
             Console.WriteLine(myPokemon.GetName() + " is a great name for a " + myPokemon.GetType());
 
-            //Core Game Loop
+
+
             myPokemon.ReduceStats();
             for (int currentTurn = 1; currentTurn < 10; currentTurn++)
             {
-                PlayerTurn(myPokemon);
-                Console.WriteLine(myPokemon.GiveHint());
+                bool isAlive = myPokemon.CheckHealth();
+                if (isAlive)
+                {
+                    Console.WriteLine(myPokemon.GiveHint());
+                    Console.WriteLine("What do you want to do with " + myPokemon.GetName() + " the " + myPokemon.GetType() + "?\n");
+                    ChooseAction(myPokemon);
+                    myPokemon.ReduceStats();
+                }
+                else
+                {
+                    GameOver(myPokemon);
+                    return;
+                }
+
+
             }
 
-            Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetType() + " had a great day! YOU WIN!");
+            Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetType() + " had a great day! YOU WIN! \n Would you like to switch game modes?");
+            
         }
 
         public static Pokemon ChooseStarter()
@@ -68,17 +93,6 @@ namespace Tamagochi
                     Console.WriteLine("That isn't a valid answer");
                     return null;
             }
-        }
-
-        public static void PlayerTurn(Pokemon myPokemon)
-        {
-            if (!myPokemon.CheckHealth())
-            {
-                GameOver(myPokemon);
-            }
-            Console.WriteLine("What do you want to do with " + myPokemon.GetName() + " the " + myPokemon.GetType() + "?\n");
-            ChooseAction(myPokemon);
-            myPokemon.ReduceStats();
         }
 
         public static void ChooseAction(Pokemon myPokemon)
@@ -135,8 +149,5 @@ namespace Tamagochi
         }
 
     }
-
-
-
 
 }
