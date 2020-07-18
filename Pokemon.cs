@@ -63,17 +63,17 @@ namespace Tamagochi
         {
             if (hunger <= thirst && hunger <= happiness)
             {
-                string hungerHint = name + " the " + pType + " looks hungry.\n";
+                string hungerHint = "\n" + name + " the " + pType + " looks hungry.\n";
                 return hungerHint;
             }
             else if (thirst <= hunger && thirst <= happiness)
             {
-                string thirstHint = name + " the " + pType + " looks thirsty.\n";
+                string thirstHint = "\n" + name + " the " + pType + " looks thirsty.\n";
                 return thirstHint;
             }
             else
             {
-                string happinessHint = name + " the " + pType + " looks bored.\n";
+                string happinessHint = "\n" + name + " the " + pType + " looks bored.\n";
                 return happinessHint;
             }
 
