@@ -4,16 +4,16 @@ using System.Text;
 
 namespace Tamagochi
 {
-    class Tomagochi : GameMode
+    class Tomagochi : Game
     {
-        public static void StartGame()
+        public override void StartGame()
         {
             Pokemon myPokemon = null;
 
             //Choose Starter Code
             while (myPokemon == null)
             {
-                Console.WriteLine("Welcome to the Pokemon Center. Choose your starter\n");
+                Console.WriteLine("Welcome to the Pokemon Playground! Choose your starter\n");
                 myPokemon = ChooseStarter();
             }
 
@@ -120,7 +120,6 @@ namespace Tamagochi
             Console.WriteLine("Oh no! You exhausted " + myPokemon.GetName() + " the " + myPokemon.GetType() + ". GAME OVER");
             Console.WriteLine("Press any key to play again");
             Console.ReadLine();
-            StartGame();
         }
 
 

@@ -5,16 +5,18 @@ namespace Tamagochi
 {
     class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            GameMode selectedMode = new Tomagochi();
-            Tomagochi.StartGame();
+            bool gameActive = false; 
+            while (!gameActive)
+            {
+                GameMode myGame = new GameMode();
+                myGame.Run();
+                gameActive = false;
+            }
+
         }
-
     }
-
-
-
 }
 
  

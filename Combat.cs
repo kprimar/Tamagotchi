@@ -4,7 +4,11 @@ using System.Text;
 
 namespace Tamagochi
 {
-    class Combat : GameMode
+    class Combat : Game
     {
+        public override void StartGame()
+        {
+            Console.WriteLine("Welcome to the Pokemon Gym!");
+        }
     }
 }
