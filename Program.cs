@@ -7,12 +7,10 @@ namespace Tamagochi
     {
         static void Main(string[] args)
         {
-            bool gameActive = false; 
-            while (!gameActive)
+            while (true)
             {
                 GameMode myGame = new GameMode();
                 myGame.Run();
-                gameActive = false;
             }
 
         }

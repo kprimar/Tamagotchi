@@ -21,13 +21,11 @@ namespace Tamagochi
             if (modeSelected == 1)
             {
                 currentMode = new Tomagochi();
-                currentMode.StartGame();
                 return currentMode;
             }
             if (modeSelected == 2)
             {
                 currentMode = new Combat();
-                currentMode.StartGame();
                 return currentMode;
             }
             else

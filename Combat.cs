@@ -8,7 +8,9 @@ namespace Tamagochi
     {
         public override void StartGame()
         {
-            Console.WriteLine("Welcome to the Pokemon Gym!");
+            Console.WriteLine("Welcome to the Pokemon Gym!\n");
+            Pokemon myPokemon = SetPokemon();
+            Console.ReadLine();
         }
     }
 }
