@@ -10,7 +10,9 @@ namespace Tamagochi
         {
             Console.WriteLine("Welcome to the Pokemon Gym!\n");
             Pokemon myPokemon = SetPokemon();
+            Console.WriteLine("This mode is under construction. Come back soon!\n");
             Console.ReadLine();
+
         }
     }
 }
