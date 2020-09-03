@@ -6,11 +6,36 @@ namespace Tamagochi
 {
     public class GameMode
     {
-        public bool gameActive = false;
+        private Game myGame;
+        public bool isGameActive = false;
+
         public void Run()
         {
-            Game gameMode = SelectGameMode();
-            gameMode.StartGame();
+            myGame = SelectGameMode();
+            myGame.StartGame();
+            isGameActive = true;
+        }
+
+        public void Update()
+        {
+            isGameActive = myGame.Update();
+
+            if (!isGameActive)
+            {
+                Console.WriteLine("Do you want to play again?\nY = Yes\nN = No");
+                string input = Console.ReadLine();
+                if(input == "y" || input == "Y")
+                {
+                    myGame.StartGame();
+                    isGameActive = true;
+                }
+                if (input == "n" || input == "N")
+                {
+                    Run();
+                    isGameActive = false;
+                }
+            }
+
         }
 
         public Game SelectGameMode()

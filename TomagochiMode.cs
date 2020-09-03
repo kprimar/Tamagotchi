@@ -6,30 +6,39 @@ namespace Tamagochi
 {
     class Tomagochi : Game
     {
+        private int lastTurn = 10;
+        private int currentTurn = 0;
+        Pokemon myPokemon;
+
         public override void StartGame()
         {
             Console.WriteLine("Welcome to the Pokemon Playground!\n");
-            Pokemon myPokemon = SetPokemon();
-            myPokemon.ReduceStats();
-            for (int currentTurn = 1; currentTurn < 10; currentTurn++)
+            myPokemon = SetPokemon();
+            currentTurn = 0;
+        }
+
+        public override bool Update()
+        {
+            currentTurn++;
+            if(currentTurn >= lastTurn)
             {
-                bool isAlive = myPokemon.CheckHealth();
-                if (isAlive)
-                {
-                    Console.WriteLine(myPokemon.GiveHint());
-                    Console.WriteLine("What do you want to do with " + myPokemon.GetName() + " the " + myPokemon.GetType() + "?\n");
-                    ChooseAction(myPokemon);
-                    myPokemon.ReduceStats();
-                }
-                else
-                {
-                    GameOver(myPokemon);
-                    return;
-                }
-
+                Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetType() + " had a great day! YOU WIN! \n");
+                return false;
             }
-
-            Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetType() + " had a great day! YOU WIN! \n");
+            myPokemon.ReduceStats();
+            bool isAlive = myPokemon.CheckHealth();
+            if (isAlive)
+            {
+                Console.WriteLine(myPokemon.GiveHint());
+                Console.WriteLine("What do you want to do with " + myPokemon.GetName() + " the " + myPokemon.GetType() + "?\n");
+                ChooseAction(myPokemon);
+                return true;
+            }
+            else
+            {
+                GameOver(myPokemon);
+                return false;
+            }
 
         }
 
@@ -71,11 +80,7 @@ namespace Tamagochi
         private static void GameOver(Pokemon myPokemon)
         {
             Console.WriteLine("Oh no! You exhausted " + myPokemon.GetName() + " the " + myPokemon.GetType() + ". GAME OVER");
-            Console.WriteLine("Press any key to play again");
-            Console.ReadLine();
         }
-
-
 
         //FOR DEBUGGING
         public static void ShowDebugsStats(Pokemon myPokemon)

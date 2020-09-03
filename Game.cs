@@ -4,7 +4,6 @@ using System.Text;
 
 namespace Tamagochi
 {
-
     public abstract class Game
     {
         public Pokemon SetPokemon()
@@ -60,8 +59,10 @@ namespace Tamagochi
 
         public abstract void StartGame();
 
+        public abstract bool Update();
 
-    }
+
+        }
 
 
 }
