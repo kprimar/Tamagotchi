@@ -22,7 +22,7 @@ namespace Tamagochi
             currentTurn++;
             if(currentTurn >= lastTurn)
             {
-                Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetType() + " had a great day! YOU WIN! \n");
+                Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetBreed() + " had a great day! YOU WIN! \n");
                 return false;
             }
             myPokemon.ReduceStats();
@@ -30,7 +30,7 @@ namespace Tamagochi
             if (isAlive)
             {
                 Console.WriteLine(myPokemon.GiveHint());
-                Console.WriteLine("What do you want to do with " + myPokemon.GetName() + " the " + myPokemon.GetType() + "?\n");
+                Console.WriteLine("What do you want to do with " + myPokemon.GetName() + " the " + myPokemon.GetBreed() + "?\n");
                 ChooseAction(myPokemon);
                 return true;
             }
@@ -52,23 +52,23 @@ namespace Tamagochi
                 case "F":
                 case "f":
                     myPokemon.HungerUp();
-                    Console.WriteLine("You fed " + myPokemon.GetName() + " the " + myPokemon.GetType() + ". They look satisfied.");
+                    Console.WriteLine("You fed " + myPokemon.GetName() + " the " + myPokemon.GetBreed() + ". They look satisfied.");
                     break;
                 case "W":
                 case "w":
                     if (!myPokemon.GetsThirsty())
                     {
-                        Console.WriteLine(myPokemon.GetType() + " type Pokemon don't get thirsty...");
+                        Console.WriteLine(myPokemon.GetBreed() + " type Pokemon don't get thirsty...");
                         ChooseAction(myPokemon);
                         return;
                     }
                     myPokemon.ThirstUp();
-                    Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetType() + " took a drink. They look refreshed.");
+                    Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetBreed() + " took a drink. They look refreshed.");
                     break;
                 case "P":
                 case "p":
                     myPokemon.HappinessUp();
-                    Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetType() + " looks excited!");
+                    Console.WriteLine(myPokemon.GetName() + " the " + myPokemon.GetBreed() + " looks excited!");
                     break;
                 default:
                     Console.WriteLine("That isn't a valid selection");
@@ -79,7 +79,7 @@ namespace Tamagochi
 
         private static void GameOver(Pokemon myPokemon)
         {
-            Console.WriteLine("Oh no! You exhausted " + myPokemon.GetName() + " the " + myPokemon.GetType() + ". GAME OVER");
+            Console.WriteLine("Oh no! You exhausted " + myPokemon.GetName() + " the " + myPokemon.GetBreed() + ". GAME OVER");
         }
 
         //FOR DEBUGGING

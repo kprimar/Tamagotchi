@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Tamagochi
 {
+    public enum PokemonType { None = -1, Electric, Fire, Water, Fairy, Air, Earth, Grass};
     public abstract class Game
     {
         public Pokemon SetPokemon()
@@ -20,11 +21,11 @@ namespace Tamagochi
             //Choose Name Code
             while (myPokemon.GetName() == null)
             {
-                Console.WriteLine("Congratulations! You chose a " + myPokemon.GetType() + "\nWhat would you like to name it?\n");
+                Console.WriteLine("Congratulations! You chose a " + myPokemon.GetBreed() + "\nWhat would you like to name it?\n");
                 string nameInput = Console.ReadLine();
                 myPokemon.SetName(nameInput);
             }
-            Console.WriteLine(myPokemon.GetName() + " is a great name for a " + myPokemon.GetType());
+            Console.WriteLine(myPokemon.GetName() + " is a great name for a " + myPokemon.GetBreed());
             return myPokemon;
         }
 
