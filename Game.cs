@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Tamagochi
 {
-    public enum PokemonType { None = -1, Electric, Fire, Water, Fairy, Air, Earth, Grass};
+    public enum AbilityType { None = -1, Electric, Fire, Water, Fairy, Flying, Ground, Grass, Normal};
     public abstract class Game
     {
         public Pokemon SetPokemon()
@@ -27,7 +27,7 @@ namespace Tamagochi
             }
             Console.WriteLine(myPokemon.GetName() + " is a great name for a " + myPokemon.GetBreed());
             return myPokemon;
-        }
+        }   
 
         public Pokemon ChooseStarter()
         {

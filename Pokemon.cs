@@ -9,8 +9,13 @@ namespace Tamagochi
         //GENERAL POKEMON DATA
         protected string breed;
         protected string name;
-        public PokemonType PrimaryType;
-        public PokemonType SecondaryType;
+        protected int HP;
+        public AbilityType PrimaryType;
+        public AbilityType SecondaryType;
+        public Attack attackSlot1;
+        public Attack attackSlot2;
+        public Attack attackSlot3;
+        public Attack attackSlot4;
 
         //POKEMON HEALTH DATA
         protected bool isAlive = true;
@@ -135,8 +140,13 @@ namespace Tamagochi
         {
             breed = "Pikachu";
             hasThirst = true;
-            PrimaryType = PokemonType.Electric;
-            SecondaryType = PokemonType.None;
+            PrimaryType = AbilityType.Electric;
+            SecondaryType = AbilityType.None;
+            attackSlot1 = new Thunderbolt();
+            attackSlot2 = new DoubleHit();
+            attackSlot3 = new Empty();
+            attackSlot4 = new Empty();
+
         }
     }
     public class Charmander : Pokemon
@@ -145,8 +155,12 @@ namespace Tamagochi
         {
             breed = "Charmander";
             hasThirst = true;
-            PrimaryType = PokemonType.Fire;
-            SecondaryType = PokemonType.None;
+            PrimaryType = AbilityType.Fire;
+            SecondaryType = AbilityType.None;
+            attackSlot1 = new FirePunch();
+            attackSlot2 = new DoubleHit();
+            attackSlot3 = new Empty();
+            attackSlot4 = new Empty();
         }
     }
     public class Squirtle : Pokemon
@@ -155,8 +169,12 @@ namespace Tamagochi
         {
             breed = "Squirtle";
             hasThirst = false;
-            PrimaryType = PokemonType.Water;
-            SecondaryType = PokemonType.None;
+            PrimaryType = AbilityType.Water;
+            SecondaryType = AbilityType.None;
+            attackSlot1 = new HydroCannon();
+            attackSlot2 = new DoubleHit();
+            attackSlot3 = new Empty();
+            attackSlot4 = new Empty();
         }
     }
     public class Bulbasaur : Pokemon
@@ -165,8 +183,12 @@ namespace Tamagochi
         {
             breed = "Bulbasaur";
             hasThirst = false;
-            PrimaryType = PokemonType.Grass;
-            SecondaryType = PokemonType.None;
+            PrimaryType = AbilityType.Grass;
+            SecondaryType = AbilityType.None;
+            attackSlot1 = new LeafBlade();
+            attackSlot2 = new DoubleHit();
+            attackSlot3 = new Empty();
+            attackSlot4 = new Empty();
         }
     }
     public class Gyarados : Pokemon
@@ -175,8 +197,12 @@ namespace Tamagochi
         {
             breed = "Gyarados";
             hasThirst = false;
-            PrimaryType = PokemonType.Water;
-            SecondaryType = PokemonType.Air;
+            PrimaryType = AbilityType.Water;
+            SecondaryType = AbilityType.Flying;
+            attackSlot1 = new HydroCannon();
+            attackSlot2 = new DoubleHit();
+            attackSlot3 = new Empty();
+            attackSlot4 = new Empty();
         }
     }
     public class Lanturn : Pokemon
@@ -185,8 +211,12 @@ namespace Tamagochi
         {
             breed = "Lanturn";
             hasThirst = false;
-            PrimaryType = PokemonType.Water;
-            SecondaryType = PokemonType.Electric;
+            PrimaryType = AbilityType.Water;
+            SecondaryType = AbilityType.Electric;
+            attackSlot1 = new Thunderbolt();
+            attackSlot2 = new HydroCannon();
+            attackSlot3 = new Empty();
+            attackSlot4 = new Empty();
         }
     }
     public class Quagsire : Pokemon
@@ -195,8 +225,12 @@ namespace Tamagochi
         {
             breed = "Lanturn";
             hasThirst = false;
-            PrimaryType = PokemonType.Water;
-            SecondaryType = PokemonType.Earth;
+            PrimaryType = AbilityType.Water;
+            SecondaryType = AbilityType.Ground;
+            attackSlot1 = new HydroCannon();
+            attackSlot2 = new DoubleHit();
+            attackSlot3 = new Empty();
+            attackSlot4 = new Empty();
         }
     }
 }
