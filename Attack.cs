@@ -15,7 +15,13 @@ namespace Tamagochi
         {
             return attackName;
         }
+
+        public void GetDamage()
+        {
+
+        }
     }
+
 
     class Empty : Attack
     {
@@ -106,6 +112,7 @@ namespace Tamagochi
             attackType = AbilityType.Normal;
             minAttackStrength = 5;
             maxAttackStrength = 10;
+            attackName = "DoubleHit";
         }
     }
 
@@ -116,6 +123,7 @@ namespace Tamagochi
             attackType = AbilityType.Normal;
             minAttackStrength = 5;
             maxAttackStrength = 10;
+            attackName = "DoubleSlap";
         }
     }
 }

@@ -9,9 +9,12 @@ namespace Tamagochi
         //GENERAL POKEMON DATA
         protected string breed;
         protected string name;
-        protected int HP;
+        protected int HP = 10;
         public AbilityType PrimaryType;
         public AbilityType SecondaryType;
+
+        //ATTACKS
+        public List<Attack> attacks = new List<Attack>();
         public Attack attackSlot1;
         public Attack attackSlot2;
         public Attack attackSlot3;
@@ -142,10 +145,13 @@ namespace Tamagochi
             hasThirst = true;
             PrimaryType = AbilityType.Electric;
             SecondaryType = AbilityType.None;
-            attackSlot1 = new Thunderbolt();
-            attackSlot2 = new DoubleHit();
-            attackSlot3 = new Empty();
-            attackSlot4 = new Empty();
+            attacks = new List<Attack>()
+            {
+            new Thunderbolt(),
+            new DoubleHit(),
+            new DoubleSlap(),
+            new Empty(),
+            };
 
         }
     }
@@ -157,10 +163,13 @@ namespace Tamagochi
             hasThirst = true;
             PrimaryType = AbilityType.Fire;
             SecondaryType = AbilityType.None;
-            attackSlot1 = new FirePunch();
-            attackSlot2 = new DoubleHit();
-            attackSlot3 = new Empty();
-            attackSlot4 = new Empty();
+            attacks = new List<Attack>()
+            {
+            new FirePunch(),
+            new DoubleHit(),
+            new Empty(),
+            new Empty(),
+            };
         }
     }
     public class Squirtle : Pokemon
@@ -171,10 +180,10 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.None;
-            attackSlot1 = new HydroCannon();
-            attackSlot2 = new DoubleHit();
-            attackSlot3 = new Empty();
-            attackSlot4 = new Empty();
+ //           attackSlot1 = new HydroCannon();
+ //           attackSlot2 = new DoubleHit();
+ //           attackSlot3 = new Empty();
+ //           attackSlot4 = new Empty();
         }
     }
     public class Bulbasaur : Pokemon
@@ -185,10 +194,10 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Grass;
             SecondaryType = AbilityType.None;
-            attackSlot1 = new LeafBlade();
-            attackSlot2 = new DoubleHit();
-            attackSlot3 = new Empty();
-            attackSlot4 = new Empty();
+//           attackSlot1 = new LeafBlade();
+//           attackSlot2 = new DoubleHit();
+//           attackSlot3 = new Empty();
+//           attackSlot4 = new Empty();
         }
     }
     public class Gyarados : Pokemon
@@ -199,10 +208,10 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Flying;
-            attackSlot1 = new HydroCannon();
-            attackSlot2 = new DoubleHit();
-            attackSlot3 = new Empty();
-            attackSlot4 = new Empty();
+ //           attackSlot1 = new HydroCannon();
+ //           attackSlot2 = new DoubleHit();
+ //           attackSlot3 = new Empty();
+ //           attackSlot4 = new Empty();
         }
     }
     public class Lanturn : Pokemon
@@ -213,10 +222,10 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Electric;
-            attackSlot1 = new Thunderbolt();
-            attackSlot2 = new HydroCannon();
-            attackSlot3 = new Empty();
-            attackSlot4 = new Empty();
+//            attackSlot1 = new Thunderbolt();
+//            attackSlot2 = new HydroCannon();
+//            attackSlot3 = new Empty();
+//            attackSlot4 = new Empty();
         }
     }
     public class Quagsire : Pokemon
@@ -227,10 +236,10 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Ground;
-            attackSlot1 = new HydroCannon();
-            attackSlot2 = new DoubleHit();
-            attackSlot3 = new Empty();
-            attackSlot4 = new Empty();
+//            attackSlot1 = new HydroCannon();
+//            attackSlot2 = new DoubleHit();
+//            attackSlot3 = new Empty();
+//            attackSlot4 = new Empty();
         }
     }
 }
