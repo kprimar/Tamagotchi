@@ -16,9 +16,12 @@ namespace Tamagochi
             return attackName;
         }
 
-        public void GetDamage()
+        public int GetDamage()
         {
-
+            Random damage = new Random();
+            int damageThisTurn = damage.Next(minAttackStrength, maxAttackStrength);
+            Console.Write(damageThisTurn);
+            return damageThisTurn;
         }
     }
 

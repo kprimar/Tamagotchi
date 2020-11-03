@@ -9,16 +9,18 @@ namespace Tamagochi
         //GENERAL POKEMON DATA
         protected string breed;
         protected string name;
-        protected int HP = 10;
+        protected int maxHP = 20;
+        protected int currentHP;
         public AbilityType PrimaryType;
         public AbilityType SecondaryType;
 
+        public Pokemon()
+        {
+            currentHP = maxHP;
+        }
+
         //ATTACKS
         public List<Attack> attacks = new List<Attack>();
-        public Attack attackSlot1;
-        public Attack attackSlot2;
-        public Attack attackSlot3;
-        public Attack attackSlot4;
 
         //POKEMON HEALTH DATA
         protected bool isAlive = true;
@@ -118,9 +120,18 @@ namespace Tamagochi
             }
             return isAlive;
         }
-        public int GetHP()
+        public int GetCurrentHP()
         {
-            return HP;
+            return currentHP;
+        }
+        public int GetMaxHP()
+        {
+            return maxHP;
+        }
+        public int ReduceHP(int damage)
+        {
+            currentHP = currentHP -= damage;
+            return currentHP;
         }
         public int GetHunger()
         {

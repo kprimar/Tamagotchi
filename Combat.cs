@@ -15,11 +15,20 @@ namespace Tamagochi
             Console.WriteLine("Welcome to the Pokemon Gym!\n");
             Pokemon myPokemon = SetPokemon();
             SpawnEnemy();
-            DisplayAttacks(myPokemon);
-            DisplayEnemyStats();
-            ChooseAttack(myPokemon);
-            Console.ReadLine();
+            Update(myPokemon);
+            DisplayStats(myPokemon);
         }
+
+        private void Update(Pokemon myPokemon)
+        {
+            while (myPokemon.GetCurrentHP() > 0)
+            {
+                DisplayAttacks(myPokemon);
+                ChooseAttack(myPokemon);
+                DisplayStats(myPokemon);
+            }
+        }
+
 
         public void ChooseAttack(Pokemon myPokemon)
         {
@@ -31,6 +40,7 @@ namespace Tamagochi
                 {
                     attackThisTurn = myPokemon.attacks[0];
                     Console.WriteLine("You choose " + attackThisTurn.GetAttackName()+"\n");
+                    DealDamage(attackThisTurn, enemyPokemon);
                 }
                 if (playerSelection == "2")
                 {
@@ -50,9 +60,16 @@ namespace Tamagochi
             }
         }
 
-        public void DisplayEnemyStats()
+        public void DealDamage(Attack thisAttack, Pokemon enemyPokemon)
         {
-            Console.WriteLine(enemyPokemon.GetBreed() + " HP: " + enemyPokemon.GetHP());
+            int attackDamage = thisAttack.GetDamage();
+            enemyPokemon.ReduceHP(attackDamage);
+        }
+
+        public void DisplayStats(Pokemon myPokemon)
+        {
+            Console.WriteLine("[" + myPokemon.GetName() + " HP: " + myPokemon.GetCurrentHP() + "/" + myPokemon.GetMaxHP() + "]");
+            Console.WriteLine("vs.\n[" + enemyPokemon.GetBreed() + " HP: " + enemyPokemon.GetCurrentHP() + "/" + myPokemon.GetMaxHP() + "]\n");
         }
 
         private void SpawnEnemy()
@@ -64,7 +81,6 @@ namespace Tamagochi
         public void DisplayAttacks(Pokemon myPokemon)
         {
             Console.WriteLine("What do you want to do?\n");
-            Console.WriteLine(myPokemon.GetName() + " HP: " + myPokemon.GetHP());
             GetAttacks(myPokemon);
         }
 
