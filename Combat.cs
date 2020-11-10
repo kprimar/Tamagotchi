@@ -7,16 +7,17 @@ namespace Tamagochi
     class Combat : Game
     {
         Pokemon enemyPokemon; //To Do: Set Pokemon Code
+        Pokemon myPokemon;
+        Random random = new Random();
 
         static int maxAttackOptions = 4;
 
         public override void StartGame()
         {
             Console.WriteLine("Welcome to the Pokemon Gym!\n");
-            Pokemon myPokemon = SetPokemon();
+            myPokemon = SetPokemon();
             SpawnEnemy();
             Update(myPokemon);
-            DisplayStats(myPokemon);
         }
 
         private void Update(Pokemon myPokemon)
@@ -26,9 +27,28 @@ namespace Tamagochi
                 DisplayAttacks(myPokemon);
                 ChooseAttack(myPokemon);
                 DisplayStats(myPokemon);
+                EnemyAttack();
+                DisplayStats(myPokemon);
             }
         }
 
+        private void EnemyAttack()
+        {
+            Attack enemyAttack = EnemyAttackSelection();
+            int attackDamage = enemyAttack.GetDamage();
+            myPokemon.ReduceHP(attackDamage);
+            Console.WriteLine(enemyPokemon.GetBreed() + " does " + attackDamage + " damage!");
+        }
+
+        private Attack EnemyAttackSelection()
+        {
+            int randomAttack = random.Next(0, (maxAttackOptions-1));
+            List <Attack> enemyAttacks = enemyPokemon.attacks;
+            Attack enemyAttack = enemyAttacks[randomAttack];
+            Console.WriteLine(enemyPokemon.GetBreed() + " uses " + enemyAttack.GetAttackName());
+            return enemyAttack;
+
+        }
 
         public void ChooseAttack(Pokemon myPokemon)
         {

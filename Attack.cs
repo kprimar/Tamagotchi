@@ -6,6 +6,7 @@ namespace Tamagochi
 {
     public class Attack
     {
+        Random damage = new Random();
         protected AbilityType attackType;
         protected string attackName;
         protected int minAttackStrength;
@@ -18,9 +19,7 @@ namespace Tamagochi
 
         public int GetDamage()
         {
-            Random damage = new Random();
             int damageThisTurn = damage.Next(minAttackStrength, maxAttackStrength);
-            Console.Write(damageThisTurn);
             return damageThisTurn;
         }
     }
@@ -53,6 +52,7 @@ namespace Tamagochi
         public FirePunch()
         {
             attackType = AbilityType.Fire;
+            attackName = "FirePunch";
             minAttackStrength = 5;
             maxAttackStrength = 10;
         }

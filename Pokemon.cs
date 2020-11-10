@@ -178,8 +178,8 @@ namespace Tamagochi
             {
             new FirePunch(),
             new DoubleHit(),
-            new Empty(),
-            new Empty(),
+            new FirePunch(),
+            new DoubleHit(),
             };
         }
     }
