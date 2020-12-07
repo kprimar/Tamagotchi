@@ -11,6 +11,14 @@ namespace Tamagochi
         protected string attackName;
         protected int minAttackStrength;
         protected int maxAttackStrength;
+        protected int damageMultiplier;
+
+
+
+        public AbilityType GetAttackType()
+        {
+            return attackType;
+        }
 
         public string GetAttackName()
         {
@@ -23,7 +31,6 @@ namespace Tamagochi
             return damageThisTurn;
         }
     }
-
 
     class Empty : Attack
     {
@@ -70,12 +77,12 @@ namespace Tamagochi
 
     class SpiritBreak : Attack
     {
-        public SpiritBreak()
-        {
-            attackType = AbilityType.Fairy;
-            minAttackStrength = 5;
-            maxAttackStrength = 10;
-        }
+       public SpiritBreak()
+       {
+           attackType = AbilityType.Fairy;
+           minAttackStrength = 5;
+           maxAttackStrength = 10;
+       }
     }
 
     class FloatyFall : Attack

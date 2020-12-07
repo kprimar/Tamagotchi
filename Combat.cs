@@ -9,28 +9,51 @@ namespace Tamagochi
         Pokemon enemyPokemon; //To Do: Set Pokemon Code
         Pokemon myPokemon;
         Random random = new Random();
-
         static int maxAttackOptions = 4;
+
+        Dictionary<AbilityType, float> D_electric = new Dictionary<AbilityType, float>();
 
         public override void StartGame()
         {
             Console.WriteLine("Welcome to the Pokemon Gym!\n");
             myPokemon = SetPokemon();
             SpawnEnemy();
-            Update(myPokemon);
+            CreateDictionaries();
+
         }
 
-        private void Update(Pokemon myPokemon)
+        private void CreateDictionaries()
         {
-            while (myPokemon.GetCurrentHP() > 0)
-            {
-                DisplayAttacks(myPokemon);
-                ChooseAttack(myPokemon);
-                DisplayStats(myPokemon);
-                EnemyAttack();
-                DisplayStats(myPokemon);
-            }
+            D_electric.Add(AbilityType.Flying, 2f);
+            D_electric.Add(AbilityType.Water, 2f);
+            D_electric.Add(AbilityType.Ground, 1f);
+            D_electric.Add(AbilityType.Grass, 0.5f);
         }
+
+        public override bool Update()
+        {
+            DisplayAttacks();
+            ChooseAttack();
+   
+            if(enemyPokemon.GetCurrentHP() <=0)
+            {
+                Console.WriteLine("The opposing Pokmemon fainted! YOU WIN!");
+                return false;
+            }
+
+            DisplayStats();
+            EnemyAttack();
+            DisplayStats();
+
+            if (myPokemon.GetCurrentHP() <= 0)
+            {
+                Console.WriteLine("Your Pokmemon fainted!");
+                return false;
+            }
+
+            return true;
+        }
+
 
         private void EnemyAttack()
         {
@@ -50,7 +73,7 @@ namespace Tamagochi
 
         }
 
-        public void ChooseAttack(Pokemon myPokemon)
+        public void ChooseAttack()
         {
             Attack attackThisTurn = null;
             while (attackThisTurn == null)
@@ -60,7 +83,8 @@ namespace Tamagochi
                 {
                     attackThisTurn = myPokemon.attacks[0];
                     Console.WriteLine("You choose " + attackThisTurn.GetAttackName()+"\n");
-                    DealDamage(attackThisTurn, enemyPokemon);
+                    float attackMultiplier = CheckMultiplier(attackThisTurn);
+                    DealDamage(attackThisTurn, enemyPokemon, attackMultiplier);
                 }
                 if (playerSelection == "2")
                 {
@@ -80,13 +104,43 @@ namespace Tamagochi
             }
         }
 
-        public void DealDamage(Attack thisAttack, Pokemon enemyPokemon)
+        private float CheckMultiplier(Attack attackThisTurn)
         {
-            int attackDamage = thisAttack.GetDamage();
-            enemyPokemon.ReduceHP(attackDamage);
+            float firstMultiplier = 0;
+            float secondMultiplier = 0;
+            float overallMultiplier = 0;
+            AbilityType attackType = attackThisTurn.GetAttackType();
+            if (attackType == AbilityType.Electric)
+            {
+                foreach (KeyValuePair<AbilityType, float> element in D_electric)
+                {
+                    if (element.Key == enemyPokemon.PrimaryType)
+                    {
+                        firstMultiplier = element.Value;
+                    }
+                    if (element.Key == enemyPokemon.SecondaryType)
+                    {
+                        secondMultiplier = element.Value;
+                    }
+                }
+            }
+            overallMultiplier = firstMultiplier + secondMultiplier;
+            Console.WriteLine("Multiplier was " + overallMultiplier);
+            return overallMultiplier;
+
         }
 
-        public void DisplayStats(Pokemon myPokemon)
+        public void DealDamage(Attack thisAttack, Pokemon enemyPokemon, float multiplier)
+        {
+            int attackDamage = thisAttack.GetDamage();
+            Console.WriteLine("Attack damage without multiplier :" + attackDamage);
+            int attackMultiplier = (int)Math.Round(multiplier);
+            attackDamage *= attackMultiplier;
+            enemyPokemon.ReduceHP(attackDamage);
+            Console.WriteLine("Attack damage with multiplier :" + attackDamage);
+        }
+
+        public void DisplayStats()
         {
             Console.WriteLine("[" + myPokemon.GetName() + " HP: " + myPokemon.GetCurrentHP() + "/" + myPokemon.GetMaxHP() + "]");
             Console.WriteLine("vs.\n[" + enemyPokemon.GetBreed() + " HP: " + enemyPokemon.GetCurrentHP() + "/" + myPokemon.GetMaxHP() + "]\n");
@@ -98,7 +152,7 @@ namespace Tamagochi
             Console.WriteLine("A wild " + enemyPokemon.GetBreed() + " has appeared"); ;
         }
 
-        public void DisplayAttacks(Pokemon myPokemon)
+        public void DisplayAttacks()
         {
             Console.WriteLine("What do you want to do?\n");
             GetAttacks(myPokemon);
@@ -115,9 +169,7 @@ namespace Tamagochi
             }
         }
 
-        public override bool Update()
-        {
-            return false;
-        }
+
+
     }
 }

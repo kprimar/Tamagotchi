@@ -173,7 +173,7 @@ namespace Tamagochi
             breed = "Charmander";
             hasThirst = true;
             PrimaryType = AbilityType.Fire;
-            SecondaryType = AbilityType.None;
+            SecondaryType = AbilityType.Flying;
             attacks = new List<Attack>()
             {
             new FirePunch(),

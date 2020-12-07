@@ -8,7 +8,7 @@ namespace Tamagochi
         static void Main(string[] args)
         {
             GameMode myGame = new GameMode();
-            myGame.Run();
+            myGame.Start();
 
             while (myGame.isGameActive)
             {

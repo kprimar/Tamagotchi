@@ -9,7 +9,7 @@ namespace Tamagochi
         private Game myGame;
         public bool isGameActive = false;
 
-        public void Run()
+        public void Start()
         {
             myGame = SelectGameMode();
             myGame.StartGame();
@@ -31,7 +31,7 @@ namespace Tamagochi
                 }
                 if (input == "n" || input == "N")
                 {
-                    Run();
+                    Start();
                     isGameActive = false;
                 }
             }
