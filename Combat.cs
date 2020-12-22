@@ -12,6 +12,7 @@ namespace Tamagochi
         static int maxAttackOptions = 4;
 
         Dictionary<AbilityType, float> D_electric = new Dictionary<AbilityType, float>();
+        Dictionary<AbilityType, float> D_fire = new Dictionary<AbilityType, float>();
 
         public override void StartGame()
         {
@@ -24,10 +25,16 @@ namespace Tamagochi
 
         private void CreateDictionaries()
         {
+            D_electric.Add(AbilityType.Normal, 1f);
             D_electric.Add(AbilityType.Flying, 2f);
             D_electric.Add(AbilityType.Water, 2f);
-            D_electric.Add(AbilityType.Ground, 1f);
+            D_electric.Add(AbilityType.Ground, 0f);
             D_electric.Add(AbilityType.Grass, 0.5f);
+
+            D_fire.Add(AbilityType.Normal, 1f);
+            D_fire.Add(AbilityType.Fire, 0.5f);
+            D_fire.Add(AbilityType.Water, 0.5f);
+            D_fire.Add(AbilityType.Grass, 2f);
         }
 
         public override bool Update()
@@ -58,9 +65,27 @@ namespace Tamagochi
         private void EnemyAttack()
         {
             Attack enemyAttack = EnemyAttackSelection();
-            int attackDamage = enemyAttack.GetDamage();
-            myPokemon.ReduceHP(attackDamage);
-            Console.WriteLine(enemyPokemon.GetBreed() + " does " + attackDamage + " damage!");
+            float enemyAtkWithMultiplier = CalculateMultiplier(enemyAttack, myPokemon);
+            DealDamage(myPokemon, enemyAtkWithMultiplier);
+            ShowAttackMessage(enemyPokemon, enemyAttack, enemyAtkWithMultiplier);
+            Console.WriteLine(enemyPokemon.GetBreed() + " does " + enemyAtkWithMultiplier + " damage!");
+        }
+
+        private void ShowAttackMessage(Pokemon attacker, Attack thisAttack, float damageWithMultiplier)
+        {
+            float startingDamage = thisAttack.GetDamage();
+            if (damageWithMultiplier < startingDamage)
+            {
+                Console.WriteLine(attacker.GetBreed() + " uses " + thisAttack.GetAttackName() + ". It's not very effective.");
+            }
+            else if (damageWithMultiplier >= (startingDamage * 2))
+            {
+                Console.WriteLine(attacker.GetBreed() + " uses " + thisAttack.GetAttackName() + ". It's super effective!");
+            }
+            else
+            {
+                Console.WriteLine(attacker.GetBreed() + " uses " + thisAttack.GetAttackName());
+            }
         }
 
         private Attack EnemyAttackSelection()
@@ -68,9 +93,7 @@ namespace Tamagochi
             int randomAttack = random.Next(0, (maxAttackOptions-1));
             List <Attack> enemyAttacks = enemyPokemon.attacks;
             Attack enemyAttack = enemyAttacks[randomAttack];
-            Console.WriteLine(enemyPokemon.GetBreed() + " uses " + enemyAttack.GetAttackName());
             return enemyAttack;
-
         }
 
         public void ChooseAttack()
@@ -79,65 +102,106 @@ namespace Tamagochi
             while (attackThisTurn == null)
             {
                 string playerSelection = Console.ReadLine();
-                if (playerSelection == "1")
+                bool inputIsNumber = false;
+                int input;
+                if (int.TryParse(playerSelection, out input))
                 {
-                    attackThisTurn = myPokemon.attacks[0];
-                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName()+"\n");
-                    float attackMultiplier = CheckMultiplier(attackThisTurn);
-                    DealDamage(attackThisTurn, enemyPokemon, attackMultiplier);
+                    inputIsNumber = true;
                 }
-                if (playerSelection == "2")
+                else
                 {
-                    attackThisTurn = myPokemon.attacks[1];
-                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName()+"\n");
+                    Console.WriteLine("Please choose a number between 1-4");
                 }
-                if (playerSelection == "3")
+
+                if (inputIsNumber)
                 {
-                    attackThisTurn = myPokemon.attacks[2];
-                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName()+"\n");
-                }
-                if (playerSelection == "4")
-                {
-                    attackThisTurn = myPokemon.attacks[3];
-                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName()+"\n");
+                    if (input >= 1 && input <= 4)
+                    {
+                        input -= 1;
+                        attackThisTurn = myPokemon.attacks[input];
+                        Console.WriteLine("You choose " + attackThisTurn.GetAttackName() + "\n");
+                        float attackWithMultiplier = CalculateMultiplier(attackThisTurn, enemyPokemon);
+                        DealDamage(enemyPokemon, attackWithMultiplier);
+                        ShowAttackMessage(myPokemon, attackThisTurn, attackWithMultiplier);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please choose a number between 1-4");
+                    }
                 }
             }
         }
+                /*
+                                if (playerSelection == "1")
+                                {
+                                    attackThisTurn = myPokemon.attacks[0];
+                                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName()+"\n");
+                                    float attackWithMultiplier = CalculateMultiplier(attackThisTurn, enemyPokemon);
+                                    DealDamage(enemyPokemon, attackWithMultiplier);
+                                    ShowAttackMessage(myPokemon, attackThisTurn, attackWithMultiplier);
+                                }
+                                if (playerSelection == "2")
+                                {
+                                    attackThisTurn = myPokemon.attacks[1];
+                                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName() + "\n");
+                                    float attackWithMultiplier = CalculateMultiplier(attackThisTurn, enemyPokemon);
+                                    DealDamage(enemyPokemon, attackWithMultiplier);
+                                    ShowAttackMessage(myPokemon, attackThisTurn, attackWithMultiplier);
+                                }
+                                if (playerSelection == "3")
+                                {
+                                    attackThisTurn = myPokemon.attacks[2];
+                                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName() + "\n");
+                                    float attackWithMultiplier = CalculateMultiplier(attackThisTurn, enemyPokemon);
+                                    DealDamage(enemyPokemon, attackWithMultiplier);
+                                    ShowAttackMessage(myPokemon, attackThisTurn, attackWithMultiplier);
+                                }
+                                if (playerSelection == "4")
+                                {
+                                    attackThisTurn = myPokemon.attacks[3];
+                                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName() + "\n");
+                                    float attackWithMultiplier = CalculateMultiplier(attackThisTurn, enemyPokemon);
+                                    DealDamage(enemyPokemon, attackWithMultiplier);
+                                    ShowAttackMessage(myPokemon, attackThisTurn, attackWithMultiplier);
+                                }
+                */
 
-        private float CheckMultiplier(Attack attackThisTurn)
+
+        private float CalculateMultiplier(Attack attackThisTurn, Pokemon targetPokemon)
         {
-            float firstMultiplier = 0;
-            float secondMultiplier = 0;
-            float overallMultiplier = 0;
+            float startingDamage = attackThisTurn.GetDamage();
+            float damageThisTurn = startingDamage;
             AbilityType attackType = attackThisTurn.GetAttackType();
             if (attackType == AbilityType.Electric)
             {
                 foreach (KeyValuePair<AbilityType, float> element in D_electric)
                 {
-                    if (element.Key == enemyPokemon.PrimaryType)
+                    if (element.Key == targetPokemon.PrimaryType || element.Key == targetPokemon.SecondaryType)
                     {
-                        firstMultiplier = element.Value;
-                    }
-                    if (element.Key == enemyPokemon.SecondaryType)
-                    {
-                        secondMultiplier = element.Value;
+                        Console.WriteLine("Multiplier was " + element.Value);
+                        damageThisTurn *= element.Value;
                     }
                 }
             }
-            overallMultiplier = firstMultiplier + secondMultiplier;
-            Console.WriteLine("Multiplier was " + overallMultiplier);
-            return overallMultiplier;
 
+            else if (attackType == AbilityType.Fire)
+            {
+                foreach (KeyValuePair<AbilityType, float> element in D_fire)
+                {
+                    if (element.Key == targetPokemon.PrimaryType || element.Key == targetPokemon.SecondaryType)
+                    {
+                        Console.WriteLine("Multiplier was " + element.Value);
+                        damageThisTurn *= element.Value;
+                    }
+                }
+            }
+
+            return damageThisTurn;
         }
 
-        public void DealDamage(Attack thisAttack, Pokemon enemyPokemon, float multiplier)
-        {
-            int attackDamage = thisAttack.GetDamage();
-            Console.WriteLine("Attack damage without multiplier :" + attackDamage);
-            int attackMultiplier = (int)Math.Round(multiplier);
-            attackDamage *= attackMultiplier;
-            enemyPokemon.ReduceHP(attackDamage);
-            Console.WriteLine("Attack damage with multiplier :" + attackDamage);
+        public void DealDamage(Pokemon targetPokemon, float damageThisAttack)
+        {           
+            targetPokemon.ReduceHP((int)damageThisAttack);
         }
 
         public void DisplayStats()
