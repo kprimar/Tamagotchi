@@ -30,6 +30,17 @@ namespace Tamagochi
             int damageThisTurn = damage.Next(minAttackStrength, maxAttackStrength);
             return damageThisTurn;
         }
+
+        public int GetMaxDmg()
+        {
+            return maxAttackStrength;
+        }
+        public int GetMinDmg()
+        {
+            return minAttackStrength;
+        }
+
+
     }
 
     class Empty : Attack
@@ -50,7 +61,7 @@ namespace Tamagochi
             attackType = AbilityType.Electric;
             attackName = "Thunderbolt";
             minAttackStrength = 5;
-            maxAttackStrength = 10;
+            maxAttackStrength = 7;
         }
     }
 
@@ -61,7 +72,7 @@ namespace Tamagochi
             attackType = AbilityType.Fire;
             attackName = "FirePunch";
             minAttackStrength = 5;
-            maxAttackStrength = 10;
+            maxAttackStrength = 7;
         }
     }
 
@@ -81,7 +92,7 @@ namespace Tamagochi
        {
            attackType = AbilityType.Fairy;
            minAttackStrength = 5;
-           maxAttackStrength = 10;
+           maxAttackStrength = 7;
        }
     }
 
@@ -91,7 +102,7 @@ namespace Tamagochi
         {
             attackType = AbilityType.Flying;
             minAttackStrength = 5;
-            maxAttackStrength = 10;
+            maxAttackStrength = 7;
         }
     }
 
@@ -101,7 +112,7 @@ namespace Tamagochi
         {
             attackType = AbilityType.Ground;
             minAttackStrength = 5;
-            maxAttackStrength = 10;
+            maxAttackStrength = 7;
         }
     }
 
@@ -111,7 +122,7 @@ namespace Tamagochi
         {
             attackType = AbilityType.Grass;
             minAttackStrength = 5;
-            maxAttackStrength = 10;
+            maxAttackStrength = 7;
         }
     }
 
@@ -121,7 +132,7 @@ namespace Tamagochi
         {
             attackType = AbilityType.Normal;
             minAttackStrength = 5;
-            maxAttackStrength = 10;
+            maxAttackStrength = 7;
             attackName = "DoubleHit";
         }
     }
@@ -132,7 +143,7 @@ namespace Tamagochi
         {
             attackType = AbilityType.Normal;
             minAttackStrength = 5;
-            maxAttackStrength = 10;
+            maxAttackStrength = 7;
             attackName = "DoubleSlap";
         }
     }

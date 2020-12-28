@@ -11,6 +11,7 @@ namespace Tamagochi
         Random random = new Random();
         static int maxAttackOptions = 4;
 
+        Dictionary<AbilityType, Dictionary<AbilityType, float>> AttackToDictionary = new Dictionary<AbilityType, Dictionary<AbilityType, float>>();
         Dictionary<AbilityType, float> D_electric = new Dictionary<AbilityType, float>();
         Dictionary<AbilityType, float> D_fire = new Dictionary<AbilityType, float>();
 
@@ -25,6 +26,9 @@ namespace Tamagochi
 
         private void CreateDictionaries()
         {
+            AttackToDictionary.Add(AbilityType.Electric, D_electric);
+            AttackToDictionary.Add(AbilityType.Fire, D_fire);
+
             D_electric.Add(AbilityType.Normal, 1f);
             D_electric.Add(AbilityType.Flying, 2f);
             D_electric.Add(AbilityType.Water, 2f);
@@ -62,25 +66,18 @@ namespace Tamagochi
         }
 
 
-        private void EnemyAttack()
-        {
-            Attack enemyAttack = EnemyAttackSelection();
-            float enemyAtkWithMultiplier = CalculateMultiplier(enemyAttack, myPokemon);
-            DealDamage(myPokemon, enemyAtkWithMultiplier);
-            ShowAttackMessage(enemyPokemon, enemyAttack, enemyAtkWithMultiplier);
-            Console.WriteLine(enemyPokemon.GetBreed() + " does " + enemyAtkWithMultiplier + " damage!");
-        }
-
+        //SHARED FUNCTIONS
         private void ShowAttackMessage(Pokemon attacker, Attack thisAttack, float damageWithMultiplier)
         {
-            float startingDamage = thisAttack.GetDamage();
-            if (damageWithMultiplier < startingDamage)
-            {
-                Console.WriteLine(attacker.GetBreed() + " uses " + thisAttack.GetAttackName() + ". It's not very effective.");
-            }
-            else if (damageWithMultiplier >= (startingDamage * 2))
+            int dmgWithMultiplierInt = (int)damageWithMultiplier;
+
+            if (dmgWithMultiplierInt >= thisAttack.GetMaxDmg())
             {
                 Console.WriteLine(attacker.GetBreed() + " uses " + thisAttack.GetAttackName() + ". It's super effective!");
+            }
+            else if (dmgWithMultiplierInt < thisAttack.GetMinDmg())
+            {
+                Console.WriteLine(attacker.GetBreed() + " uses " + thisAttack.GetAttackName() + ". It's not very effective.");
             }
             else
             {
@@ -88,14 +85,64 @@ namespace Tamagochi
             }
         }
 
+        private float CalculateMultiplier(Attack attackThisTurn, Pokemon targetPokemon)
+        {
+            float startingDamage = attackThisTurn.GetDamage();
+            float damageThisTurn = startingDamage;
+            AbilityType attackType = attackThisTurn.GetAttackType();
+            Dictionary<AbilityType, float> attackDictionary;
+
+            Console.WriteLine(startingDamage);
+            foreach (KeyValuePair<AbilityType, Dictionary<AbilityType, float>> dictionary in AttackToDictionary)
+            {
+                if (attackType == dictionary.Key)
+                {
+                    attackDictionary = dictionary.Value;
+                    foreach (KeyValuePair<AbilityType, float> element in attackDictionary)
+                    {
+                        if (element.Key == targetPokemon.PrimaryType || element.Key == targetPokemon.SecondaryType)
+                        {
+                            Console.WriteLine("Multiplier was " + element.Value);
+                            damageThisTurn *= element.Value;
+                        }
+                    }
+                }
+            }
+            Console.WriteLine(damageThisTurn);
+            return damageThisTurn;
+        }
+
+        public void DealDamage(Pokemon targetPokemon, float damageThisAttack)
+        {
+            targetPokemon.ReduceHP((int)damageThisAttack);
+        }
+
+        public void DisplayStats()
+        {
+            Console.WriteLine("[" + myPokemon.GetName() + " HP: " + myPokemon.GetCurrentHP() + "/" + myPokemon.GetMaxHP() + "]");
+            Console.WriteLine("vs.\n[" + enemyPokemon.GetBreed() + " HP: " + enemyPokemon.GetCurrentHP() + "/" + myPokemon.GetMaxHP() + "]\n");
+        }
+
+
+        //ENEMY FUNCTIONS
         private Attack EnemyAttackSelection()
         {
-            int randomAttack = random.Next(0, (maxAttackOptions-1));
-            List <Attack> enemyAttacks = enemyPokemon.attacks;
+            int randomAttack = random.Next(0, (maxAttackOptions - 1));
+            List<Attack> enemyAttacks = enemyPokemon.attacks;
             Attack enemyAttack = enemyAttacks[randomAttack];
             return enemyAttack;
         }
 
+        private void EnemyAttack()
+        {
+            Attack enemyAttack = EnemyAttackSelection();
+            float enemyAtkWithMultiplier = CalculateMultiplier(enemyAttack, myPokemon);
+            DealDamage(myPokemon, enemyAtkWithMultiplier);
+            ShowAttackMessage(enemyPokemon, enemyAttack, enemyAtkWithMultiplier);
+        }
+
+
+        //PLAYER FUNCTIONS
         public void ChooseAttack()
         {
             Attack attackThisTurn = null;
@@ -115,7 +162,7 @@ namespace Tamagochi
 
                 if (inputIsNumber)
                 {
-                    if (input >= 1 && input <= 4)
+                    if (input >= 1 && input <= maxAttackOptions)
                     {
                         input -= 1;
                         attackThisTurn = myPokemon.attacks[input];
@@ -131,96 +178,6 @@ namespace Tamagochi
                 }
             }
         }
-                /*
-                                if (playerSelection == "1")
-                                {
-                                    attackThisTurn = myPokemon.attacks[0];
-                                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName()+"\n");
-                                    float attackWithMultiplier = CalculateMultiplier(attackThisTurn, enemyPokemon);
-                                    DealDamage(enemyPokemon, attackWithMultiplier);
-                                    ShowAttackMessage(myPokemon, attackThisTurn, attackWithMultiplier);
-                                }
-                                if (playerSelection == "2")
-                                {
-                                    attackThisTurn = myPokemon.attacks[1];
-                                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName() + "\n");
-                                    float attackWithMultiplier = CalculateMultiplier(attackThisTurn, enemyPokemon);
-                                    DealDamage(enemyPokemon, attackWithMultiplier);
-                                    ShowAttackMessage(myPokemon, attackThisTurn, attackWithMultiplier);
-                                }
-                                if (playerSelection == "3")
-                                {
-                                    attackThisTurn = myPokemon.attacks[2];
-                                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName() + "\n");
-                                    float attackWithMultiplier = CalculateMultiplier(attackThisTurn, enemyPokemon);
-                                    DealDamage(enemyPokemon, attackWithMultiplier);
-                                    ShowAttackMessage(myPokemon, attackThisTurn, attackWithMultiplier);
-                                }
-                                if (playerSelection == "4")
-                                {
-                                    attackThisTurn = myPokemon.attacks[3];
-                                    Console.WriteLine("You choose " + attackThisTurn.GetAttackName() + "\n");
-                                    float attackWithMultiplier = CalculateMultiplier(attackThisTurn, enemyPokemon);
-                                    DealDamage(enemyPokemon, attackWithMultiplier);
-                                    ShowAttackMessage(myPokemon, attackThisTurn, attackWithMultiplier);
-                                }
-                */
-
-
-        private float CalculateMultiplier(Attack attackThisTurn, Pokemon targetPokemon)
-        {
-            float startingDamage = attackThisTurn.GetDamage();
-            float damageThisTurn = startingDamage;
-            AbilityType attackType = attackThisTurn.GetAttackType();
-            if (attackType == AbilityType.Electric)
-            {
-                foreach (KeyValuePair<AbilityType, float> element in D_electric)
-                {
-                    if (element.Key == targetPokemon.PrimaryType || element.Key == targetPokemon.SecondaryType)
-                    {
-                        Console.WriteLine("Multiplier was " + element.Value);
-                        damageThisTurn *= element.Value;
-                    }
-                }
-            }
-
-            else if (attackType == AbilityType.Fire)
-            {
-                foreach (KeyValuePair<AbilityType, float> element in D_fire)
-                {
-                    if (element.Key == targetPokemon.PrimaryType || element.Key == targetPokemon.SecondaryType)
-                    {
-                        Console.WriteLine("Multiplier was " + element.Value);
-                        damageThisTurn *= element.Value;
-                    }
-                }
-            }
-
-            return damageThisTurn;
-        }
-
-        public void DealDamage(Pokemon targetPokemon, float damageThisAttack)
-        {           
-            targetPokemon.ReduceHP((int)damageThisAttack);
-        }
-
-        public void DisplayStats()
-        {
-            Console.WriteLine("[" + myPokemon.GetName() + " HP: " + myPokemon.GetCurrentHP() + "/" + myPokemon.GetMaxHP() + "]");
-            Console.WriteLine("vs.\n[" + enemyPokemon.GetBreed() + " HP: " + enemyPokemon.GetCurrentHP() + "/" + myPokemon.GetMaxHP() + "]\n");
-        }
-
-        private void SpawnEnemy()
-        {
-            enemyPokemon = new Charmander(); //TO DO: Remove hardcoded enemy. Get random.
-            Console.WriteLine("A wild " + enemyPokemon.GetBreed() + " has appeared"); ;
-        }
-
-        public void DisplayAttacks()
-        {
-            Console.WriteLine("What do you want to do?\n");
-            GetAttacks(myPokemon);
-        }
 
         private static void GetAttacks(Pokemon myPokemon)
         {
@@ -233,7 +190,17 @@ namespace Tamagochi
             }
         }
 
+        public void DisplayAttacks()
+        {
+            Console.WriteLine("What do you want to do?\n");
+            GetAttacks(myPokemon);
+        }
 
+        private void SpawnEnemy()
+        {
+            enemyPokemon = new Charmander(); //TO DO: Remove hardcoded enemy. Get random.
+            Console.WriteLine("A wild " + enemyPokemon.GetBreed() + " has appeared"); ;
+        }
 
     }
 }
