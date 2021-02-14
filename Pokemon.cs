@@ -191,10 +191,13 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.None;
- //           attackSlot1 = new HydroCannon();
- //           attackSlot2 = new DoubleHit();
- //           attackSlot3 = new Empty();
- //           attackSlot4 = new Empty();
+            attacks = new List<Attack>()
+            {
+            new HydroCannon(),
+            new DoubleHit(),
+            new DoubleSlap(),
+            new DoubleHit(),
+            };
         }
     }
     public class Bulbasaur : Pokemon
@@ -205,10 +208,13 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Grass;
             SecondaryType = AbilityType.None;
-//           attackSlot1 = new LeafBlade();
-//           attackSlot2 = new DoubleHit();
-//           attackSlot3 = new Empty();
-//           attackSlot4 = new Empty();
+            attacks = new List<Attack>()
+            {
+            new LeafBlade(),
+            new DoubleHit(),
+            new DoubleSlap(),
+            new DoubleHit(),
+            };
         }
     }
     public class Gyarados : Pokemon
@@ -219,10 +225,13 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Flying;
- //           attackSlot1 = new HydroCannon();
- //           attackSlot2 = new DoubleHit();
- //           attackSlot3 = new Empty();
- //           attackSlot4 = new Empty();
+            attacks = new List<Attack>()
+            {
+            new HydroCannon(),
+            new DoubleHit(),
+            new DoubleSlap(),
+            new DoubleHit(),
+            };
         }
     }
     public class Lanturn : Pokemon
@@ -233,10 +242,13 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Electric;
-//            attackSlot1 = new Thunderbolt();
-//            attackSlot2 = new HydroCannon();
-//            attackSlot3 = new Empty();
-//            attackSlot4 = new Empty();
+            attacks = new List<Attack>()
+            {
+            new Thunderbolt(),
+            new DoubleHit(),
+            new DoubleSlap(),
+            new DoubleHit(),
+            };
         }
     }
     public class Quagsire : Pokemon
@@ -247,10 +259,13 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Ground;
-//            attackSlot1 = new HydroCannon();
-//            attackSlot2 = new DoubleHit();
-//            attackSlot3 = new Empty();
-//            attackSlot4 = new Empty();
+            attacks = new List<Attack>()
+            {
+            new HydroCannon(),
+            new DoubleHit(),
+            new DoubleSlap(),
+            new DoubleHit(),
+            };
         }
     }
 }

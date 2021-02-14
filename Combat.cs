@@ -21,11 +21,14 @@ namespace Tamagochi
             myPokemon = SetPokemon();
             SpawnEnemy();
             CreateDictionaries();
-
         }
+
 
         private void CreateDictionaries()
         {
+
+        //MAKE THESE VALUES VARIABLES
+
             AttackToDictionary.Add(AbilityType.Electric, D_electric);
             AttackToDictionary.Add(AbilityType.Fire, D_fire);
 
@@ -102,13 +105,11 @@ namespace Tamagochi
                     {
                         if (element.Key == targetPokemon.PrimaryType || element.Key == targetPokemon.SecondaryType)
                         {
-                            Console.WriteLine("Multiplier was " + element.Value);
                             damageThisTurn *= element.Value;
                         }
                     }
                 }
             }
-            Console.WriteLine(damageThisTurn);
             return damageThisTurn;
         }
 
@@ -196,10 +197,30 @@ namespace Tamagochi
             GetAttacks(myPokemon);
         }
 
+        private void CreateEnemyList(List<Pokemon> enemyList)
+        {
+            enemyList.Add(new Pikachu());
+            enemyList.Add(new Charmander());
+            enemyList.Add(new Squirtle());
+            enemyList.Add(new Bulbasaur());
+            enemyList.Add(new Gyarados());
+            enemyList.Add(new Quagsire());
+            enemyList.Add(new Lanturn());
+        }
+
         private void SpawnEnemy()
         {
-            enemyPokemon = new Charmander(); //TO DO: Remove hardcoded enemy. Get random.
-            Console.WriteLine("A wild " + enemyPokemon.GetBreed() + " has appeared"); ;
+            do
+            {
+                List<Pokemon> enemyList = new List<Pokemon>();
+                CreateEnemyList(enemyList);
+                Random random = new Random();
+                int randomEnemy = random.Next(0, enemyList.Count);
+                enemyPokemon = enemyList[randomEnemy];
+            }
+            while (enemyPokemon.GetBreed() == myPokemon.GetBreed());
+
+            Console.WriteLine("A wild " + enemyPokemon.GetBreed() + " had appeared!");            
         }
 
     }
