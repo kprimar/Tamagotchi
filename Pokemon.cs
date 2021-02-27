@@ -208,13 +208,13 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Grass;
             SecondaryType = AbilityType.None;
-            attacks = new List<Attack>()
-            {
-            new LeafBlade(),
-            new DoubleHit(),
-            new DoubleSlap(),
-            new DoubleHit(),
-            };
+            attacks = new List<Attack>();
+            //{
+            //new LeafBlade(),
+            //new DoubleHit(),
+            //new DoubleSlap(),
+            //new DoubleHit(),
+            //};
         }
     }
     public class Gyarados : Pokemon
@@ -225,13 +225,13 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Flying;
-            attacks = new List<Attack>()
-            {
-            new HydroCannon(),
-            new DoubleHit(),
-            new DoubleSlap(),
-            new DoubleHit(),
-            };
+            attacks = new List<Attack>();
+            //{
+            //new HydroCannon(),
+            //new DoubleHit(),
+            //new DoubleSlap(),
+            //new DoubleHit(),
+            //};
         }
     }
     public class Lanturn : Pokemon
@@ -242,13 +242,13 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Electric;
-            attacks = new List<Attack>()
-            {
-            new Thunderbolt(),
-            new DoubleHit(),
-            new DoubleSlap(),
-            new DoubleHit(),
-            };
+            attacks = new List<Attack>();
+            //{
+            //new Thunderbolt(),
+            //new DoubleHit(),
+            //new DoubleSlap(),
+            //new DoubleHit(),
+            //};
         }
     }
     public class Quagsire : Pokemon
@@ -259,13 +259,13 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Ground;
-            attacks = new List<Attack>()
-            {
-            new HydroCannon(),
-            new DoubleHit(),
-            new DoubleSlap(),
-            new DoubleHit(),
-            };
+            attacks = new List<Attack>();
+            //{
+            //new HydroCannon(),
+            //new DoubleHit(),
+            //new DoubleSlap(),
+            //new DoubleHit(),
+            //};
         }
     }
 }

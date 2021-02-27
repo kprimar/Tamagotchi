@@ -64,13 +64,33 @@ namespace Tamagochi
             maxAttackStrength = 7;
         }
     }
+    class ThunderShock : Attack
+    {
+        public ThunderShock()
+        {
+            attackType = AbilityType.Electric;
+            attackName = "Thundershock";
+            minAttackStrength = 5;
+            maxAttackStrength = 7;
+        }
+    }
 
     class FirePunch : Attack
     {
         public FirePunch()
         {
             attackType = AbilityType.Fire;
-            attackName = "FirePunch";
+            attackName = "Fire Punch";
+            minAttackStrength = 5;
+            maxAttackStrength = 7;
+        }
+    }
+    class FlameThrower : Attack
+    {
+        public FlameThrower()
+        {
+            attackType = AbilityType.Fire;
+            attackName = "Flame Thrower";
             minAttackStrength = 5;
             maxAttackStrength = 7;
         }
@@ -81,6 +101,17 @@ namespace Tamagochi
         public HydroCannon()
         {
             attackType = AbilityType.Water;
+            attackName = "Hydro Cannon";
+            minAttackStrength = 5;
+            maxAttackStrength = 10;
+        }
+    }
+    class Splash : Attack
+    {
+        public Splash()
+        {
+            attackType = AbilityType.Water;
+            attackName = "Splash";
             minAttackStrength = 5;
             maxAttackStrength = 10;
         }
@@ -91,9 +122,20 @@ namespace Tamagochi
        public SpiritBreak()
        {
            attackType = AbilityType.Fairy;
+           attackName = "Spirit Break";
            minAttackStrength = 5;
            maxAttackStrength = 7;
        }
+    }
+    class SoulDrain : Attack
+    {
+        public SoulDrain()
+        {
+            attackType = AbilityType.Fairy;
+            attackName = "Soul Drain";
+            minAttackStrength = 5;
+            maxAttackStrength = 7;
+        }
     }
 
     class FloatyFall : Attack
@@ -101,6 +143,17 @@ namespace Tamagochi
         public FloatyFall()
         {
             attackType = AbilityType.Flying;
+            attackName = "Floaty Fall";
+            minAttackStrength = 5;
+            maxAttackStrength = 7;
+        }
+    }
+    class Flutter : Attack
+    {
+        public Flutter()
+        {
+            attackType = AbilityType.Flying;
+            attackName = "Flutter";
             minAttackStrength = 5;
             maxAttackStrength = 7;
         }
@@ -111,6 +164,17 @@ namespace Tamagochi
         public Earthquake()
         {
             attackType = AbilityType.Ground;
+            attackName = "Earthquake";
+            minAttackStrength = 5;
+            maxAttackStrength = 7;
+        }
+    }
+    class Landslide : Attack
+    {
+        public Landslide()
+        {
+            attackType = AbilityType.Ground;
+            attackName = "Landslide";
             minAttackStrength = 5;
             maxAttackStrength = 7;
         }
@@ -121,6 +185,17 @@ namespace Tamagochi
         public LeafBlade()
         {
             attackType = AbilityType.Grass;
+            attackName = "Leaf Blade";
+            minAttackStrength = 5;
+            maxAttackStrength = 7;
+        }
+    }
+    class RazorLeaf : Attack
+    {
+        public RazorLeaf()
+        {
+            attackType = AbilityType.Grass;
+            attackName = "Razor Leaf";
             minAttackStrength = 5;
             maxAttackStrength = 7;
         }
