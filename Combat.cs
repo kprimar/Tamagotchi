@@ -11,10 +11,9 @@ namespace Tamagochi
 
         Pokemon myPokemon;
         Random random = new Random();
-        static int maxAttackOptions = 2;
+        static int maxAttackOptions = 4;
 
-        Dictionary<AbilityType, List<System.Type>> attackToTypeDictionary = new Dictionary<AbilityType, List<System.Type>>();
-        Dictionary<AbilityType, Dictionary<AbilityType, float>> AttackToDictionary = new Dictionary<AbilityType, Dictionary<AbilityType, float>>();
+        Dictionary<AbilityType, Dictionary<AbilityType, float>> MultiplyerDictionary = new Dictionary<AbilityType, Dictionary<AbilityType, float>>();
         Dictionary<AbilityType, float> D_electricAffinities = new Dictionary<AbilityType, float>();
         Dictionary<AbilityType, float> D_fireAffinities = new Dictionary<AbilityType, float>();
 
@@ -26,17 +25,18 @@ namespace Tamagochi
         List<System.Type> flyingAttackList = new List<System.Type>();
         List<System.Type> groundAttackList = new List<System.Type>();
         List<System.Type> normalAttackList = new List<System.Type>();
-        List<List<System.Type>> ListOfAttackLists = new List<List<Type>>();
+        Dictionary<AbilityType, List<System.Type>> attackToTypeDictionary = new Dictionary<AbilityType, List<System.Type>>();
+
 
         public override void StartGame()
         {
             Console.WriteLine("Welcome to the Pokemon Gym!\n");
             myPokemon = SetPokemon();
             CreateEnemyAttackLists();
-            SpawnEnemy();
-            SetEnemyAttacks();
             CreateAttackToTypeDictionary();
             CreateDictionaries();
+            SpawnEnemy();
+            SetEnemyAttacks();
         }
 
         private void CreateAttackToTypeDictionary()
@@ -58,8 +58,8 @@ namespace Tamagochi
             float immune = 0f;
             float notVeryEffective = 2f;
 
-            AttackToDictionary.Add(AbilityType.Electric, D_electricAffinities);
-            AttackToDictionary.Add(AbilityType.Fire, D_fireAffinities);
+            MultiplyerDictionary.Add(AbilityType.Electric, D_electricAffinities);
+            MultiplyerDictionary.Add(AbilityType.Fire, D_fireAffinities);
 
             D_electricAffinities.Add(AbilityType.Normal, neutral);
             D_electricAffinities.Add(AbilityType.Flying, superEffective);
@@ -125,7 +125,7 @@ namespace Tamagochi
             Dictionary<AbilityType, float> attackDictionary;
 
             Console.WriteLine(startingDamage);
-            foreach (KeyValuePair<AbilityType, Dictionary<AbilityType, float>> dictionary in AttackToDictionary)
+            foreach (KeyValuePair<AbilityType, Dictionary<AbilityType, float>> dictionary in MultiplyerDictionary)
             {
                 if (attackType == dictionary.Key)
                 {
@@ -261,16 +261,6 @@ namespace Tamagochi
 
             normalAttackList.Add(typeof(DoubleHit));
             normalAttackList.Add(typeof(DoubleSlap));
-
-            ListOfAttackLists.Add(electricAttackList);
-            ListOfAttackLists.Add(fireAttackList);
-            ListOfAttackLists.Add(waterAttackList);
-            ListOfAttackLists.Add(grassAttackList);
-            ListOfAttackLists.Add(fairyAttackList);
-            ListOfAttackLists.Add(flyingAttackList);
-            ListOfAttackLists.Add(groundAttackList);
-            ListOfAttackLists.Add(normalAttackList);
-
         }
 
         private void SetEnemyAttacks()
@@ -278,40 +268,65 @@ namespace Tamagochi
             AbilityType enemyPType = enemyPokemon.PrimaryType;
             AbilityType enemySType = enemyPokemon.SecondaryType;
 
-            Attack attack1 = null;
-            Attack attack2 = null;
-            Attack attack3 = null;
-            Attack attack4 = null;
-
-            foreach (KeyValuePair<AbilityType, List<System.Type>> attackList in attackToTypeDictionary)
-            {
-                if (attackList.Key == enemyPType)
-                {
-                    List<System.Type> possibleAttacks = attackList.Value;
-                    int randomAttack = random.Next(0, possibleAttacks.Count);
-                    attack1 = Activator.CreateInstance(possibleAttacks[randomAttack]) as Attack;
-                }
-            }
+            Attack attack1 = GetRandomAttackForType(enemyPType);
+            enemyPokemon.attacks.Add(attack1);
 
             if (enemySType != AbilityType.None)
             {
-                foreach (KeyValuePair<AbilityType, List<System.Type>> attackList in attackToTypeDictionary)
-                {
-                    if (attackList.Key == enemySType)
-                    {
-                        List<System.Type> possibleAttacks = attackList.Value;
-                        int randomAttack = random.Next(0, possibleAttacks.Count);
-                        attack2 = Activator.CreateInstance(possibleAttacks[randomAttack]) as Attack;
-                    }
-                }
+                Attack attack2 = GetRandomAttackForType(enemySType);
+                enemyPokemon.attacks.Add(attack2);
             }
 
+            while (enemyPokemon.attacks.Count < maxAttackOptions)
+            {
+                Attack rndAttack = GetRandomAttack(enemyPokemon.attacks);
+                enemyPokemon.attacks.Add(rndAttack);
+            }
 
-            enemyPokemon.attacks.Add(attack1);
-            enemyPokemon.attacks.Add(attack2);
-
+            foreach (Attack blacklistedAttack in enemyPokemon.attacks)
+            {
+                Console.WriteLine("DEBUG ENEMY ATTACKS \n" + blacklistedAttack.GetAttackName().ToString());
+            }
         }
 
+        private Attack GetRandomAttack(List<Attack> blacklist)
+        {
+            Attack rndAttack = null;
+            bool pickAttack = false;
+            do
+            {
+                pickAttack = false;
+                Array abilityTypeArray = Enum.GetValues(typeof(AbilityType));
+                AbilityType rndAbilityType;
+                rndAbilityType = (AbilityType)abilityTypeArray.GetValue(random.Next(0, abilityTypeArray.Length));
+
+                rndAttack = GetRandomAttackForType(rndAbilityType);
+                foreach (Attack blacklistedAttack in blacklist)
+                {
+                    if (blacklistedAttack.GetType() == rndAttack.GetType())
+                    {
+                        pickAttack = true;
+                        break;
+                    }
+   
+                }
+            } while (pickAttack);
+
+            return rndAttack;
+        }
+
+        private Attack GetRandomAttackForType(AbilityType abilityType)
+        {
+            Attack rndAttack = null;
+            List<System.Type> typeList; 
+            if (attackToTypeDictionary.TryGetValue(abilityType, out typeList))
+            {
+                int randomAttack = random.Next(0, typeList.Count);
+                rndAttack = Activator.CreateInstance(typeList[randomAttack]) as Attack;
+            }
+            else { Console.WriteLine("not found"); }
+            return rndAttack; 
+        }
 
         private void SpawnEnemy()
         {
@@ -324,7 +339,7 @@ namespace Tamagochi
                 int randomEnemy = random.Next(0, enemyList.Count);
                 enemyType = enemyList[randomEnemy];
             }
-            while (enemyType.GetType() == myPokemon.GetType());
+            while (enemyType == myPokemon.GetType());
 
             enemyPokemon = Activator.CreateInstance(enemyType) as Pokemon;
             Console.WriteLine("A wild " + enemyPokemon.GetBreed() + " had appeared!");            

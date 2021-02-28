@@ -13,8 +13,6 @@ namespace Tamagochi
         protected int maxAttackStrength;
         protected int damageMultiplier;
 
-
-
         public AbilityType GetAttackType()
         {
             return attackType;
@@ -208,7 +206,7 @@ namespace Tamagochi
             attackType = AbilityType.Normal;
             minAttackStrength = 5;
             maxAttackStrength = 7;
-            attackName = "DoubleHit";
+            attackName = "Double Hit";
         }
     }
 
@@ -219,7 +217,7 @@ namespace Tamagochi
             attackType = AbilityType.Normal;
             minAttackStrength = 5;
             maxAttackStrength = 7;
-            attackName = "DoubleSlap";
+            attackName = "Double Slap";
         }
     }
 }

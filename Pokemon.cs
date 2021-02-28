@@ -17,6 +17,10 @@ namespace Tamagochi
         public Pokemon()
         {
             currentHP = maxHP;
+            attacks = new List<Attack>();
+            {
+                new Empty();
+            }
         }
 
         //ATTACKS
@@ -174,13 +178,6 @@ namespace Tamagochi
             hasThirst = true;
             PrimaryType = AbilityType.Fire;
             SecondaryType = AbilityType.Flying;
-            attacks = new List<Attack>()
-            {
-            new FirePunch(),
-            new DoubleHit(),
-            new FirePunch(),
-            new DoubleHit(),
-            };
         }
     }
     public class Squirtle : Pokemon
@@ -191,13 +188,6 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.None;
-            attacks = new List<Attack>()
-            {
-            new HydroCannon(),
-            new DoubleHit(),
-            new DoubleSlap(),
-            new DoubleHit(),
-            };
         }
     }
     public class Bulbasaur : Pokemon
@@ -208,13 +198,6 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Grass;
             SecondaryType = AbilityType.None;
-            attacks = new List<Attack>();
-            //{
-            //new LeafBlade(),
-            //new DoubleHit(),
-            //new DoubleSlap(),
-            //new DoubleHit(),
-            //};
         }
     }
     public class Gyarados : Pokemon
@@ -225,13 +208,6 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Flying;
-            attacks = new List<Attack>();
-            //{
-            //new HydroCannon(),
-            //new DoubleHit(),
-            //new DoubleSlap(),
-            //new DoubleHit(),
-            //};
         }
     }
     public class Lanturn : Pokemon
@@ -242,13 +218,6 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Electric;
-            attacks = new List<Attack>();
-            //{
-            //new Thunderbolt(),
-            //new DoubleHit(),
-            //new DoubleSlap(),
-            //new DoubleHit(),
-            //};
         }
     }
     public class Quagsire : Pokemon
@@ -259,13 +228,6 @@ namespace Tamagochi
             hasThirst = false;
             PrimaryType = AbilityType.Water;
             SecondaryType = AbilityType.Ground;
-            attacks = new List<Attack>();
-            //{
-            //new HydroCannon(),
-            //new DoubleHit(),
-            //new DoubleSlap(),
-            //new DoubleHit(),
-            //};
         }
     }
 }
