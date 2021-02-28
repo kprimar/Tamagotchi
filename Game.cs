@@ -5,8 +5,11 @@ using System.Text;
 namespace Tamagochi
 {
     public enum AbilityType { None = -1, Electric, Fire, Water, Fairy, Flying, Ground, Grass, Normal};
+
     public abstract class Game
     {
+        public bool isReplay = false;
+
         public Pokemon SetPokemon()
         {
             Pokemon myPokemon = null;

@@ -160,14 +160,6 @@ namespace Tamagochi
             hasThirst = true;
             PrimaryType = AbilityType.Electric;
             SecondaryType = AbilityType.None;
-            attacks = new List<Attack>()
-            {
-            new Thunderbolt(),
-            new DoubleHit(),
-            new DoubleSlap(),
-            new Empty(),
-            };
-
         }
     }
     public class Charmander : Pokemon

@@ -26,6 +26,7 @@ namespace Tamagochi
                 string input = Console.ReadLine();
                 if(input == "y" || input == "Y")
                 {
+                    myGame.isReplay = true;
                     myGame.StartGame();
                     isGameActive = true;
                 }
